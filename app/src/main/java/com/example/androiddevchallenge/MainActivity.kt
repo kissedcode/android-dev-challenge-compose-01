@@ -18,44 +18,57 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.info.PetInfo
+import com.example.androiddevchallenge.list.PetListViewModel
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MyTheme {
-                MyApp()
-            }
-        }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    setContent {
+      MyTheme(darkTheme = false) {
+        MyApp()
+      }
     }
+  }
 }
 
 // Start building your app here!
 @Composable
 fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+  val navController = rememberNavController()
+
+  NavHost(navController, startDestination = "list") {
+    composable("list") {
+      PetList(
+        viewModel(PetListViewModel::class.java, factory = PetListViewModel.factory(navController))
+      )
     }
+    composable(
+      "info/{id}",
+      arguments = listOf(
+        navArgument("id") { type = NavType.IntType }
+      )
+    ) {
+      val puppyId = it.arguments?.getInt("id") ?: -1
+      PetInfo(puppyId)
+    }
+  }
 }
 
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
-    MyTheme {
-        MyApp()
-    }
-}
-
-@Preview("Dark Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun DarkPreview() {
-    MyTheme(darkTheme = true) {
-        MyApp()
-    }
+  MyTheme {
+    MyApp()
+  }
 }
