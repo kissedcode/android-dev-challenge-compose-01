@@ -1,3 +1,18 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge.list
 
 import androidx.compose.foundation.layout.Box
@@ -24,44 +39,42 @@ import com.example.androiddevchallenge.ui.theme.MyTheme
 @Composable
 fun PetList(viewModel: PetListViewModel) {
 
-  val state by viewModel.state.observeAsState()
+    val state by viewModel.state.observeAsState()
 
-  if (state.isNullOrEmpty()) {
-    Box(Modifier.fillMaxSize()) {
-      Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.align(Alignment.Center)
-      ) {
-        CircularProgressIndicator()
-        Spacer(modifier = Modifier.size(16.dp))
-        Text(text = "Loading 100 cats...")
-      }
-    }
-  } else {
-    Scaffold(
-      topBar = {
-        TopAppBar(title = { Text(text = "Choose a pet to adopt") })
-      }
-    ) {
-      LazyColumn {
-        item { Spacer(modifier = Modifier.size(4.dp)) }
-        items(state!!) { puppy ->
-          PetItem(puppy) {
-            viewModel.onClick(puppy)
-          }
-          Spacer(modifier = Modifier.size(4.dp))
+    if (state.isNullOrEmpty()) {
+        Box(Modifier.fillMaxSize()) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.align(Alignment.Center)
+            ) {
+                CircularProgressIndicator()
+                Spacer(modifier = Modifier.size(16.dp))
+                Text(text = "Loading 100 cats...")
+            }
         }
-      }
+    } else {
+        Scaffold(
+            topBar = {
+                TopAppBar(title = { Text(text = "Choose a pet to adopt") })
+            }
+        ) {
+            LazyColumn {
+                item { Spacer(modifier = Modifier.size(4.dp)) }
+                items(state!!) { puppy ->
+                    PetItem(puppy) {
+                        viewModel.onClick(puppy)
+                    }
+                    Spacer(modifier = Modifier.size(4.dp))
+                }
+            }
+        }
     }
-  }
 }
-
 
 @Preview("Puppy list", widthDp = 360, heightDp = 640)
 @Composable
 fun PetListPreview() {
-  MyTheme {
-    PetList(viewModel = viewModel())
-  }
+    MyTheme {
+        PetList(viewModel = viewModel())
+    }
 }
-

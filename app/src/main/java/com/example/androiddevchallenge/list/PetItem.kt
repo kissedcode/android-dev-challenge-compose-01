@@ -1,3 +1,18 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge.list
 
 import androidx.compose.foundation.BorderStroke
@@ -28,46 +43,46 @@ import dev.chrisbanes.accompanist.glide.GlideImage
 
 @Composable
 fun PetItem(pet: Pet, onClick: () -> Unit) {
-  Card(
-    shape = MaterialTheme.shapes.medium,
-    elevation = 8.dp,
-    modifier = Modifier
-      .height(80.dp)
-      .fillMaxWidth()
-      .padding(horizontal = 8.dp)
-      .clickable(onClick = onClick)
-  ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-      Spacer(Modifier.size(8.dp))
-      GlideImage(
-        data = pet.imageUrl,
-        contentScale = ContentScale.Crop,
-        contentDescription = "",
+    Card(
+        shape = MaterialTheme.shapes.medium,
+        elevation = 8.dp,
         modifier = Modifier
-          .size(60.dp)
-          .padding(4.dp)
-          .clip(CircleShape)
-          .border(BorderStroke(4.dp, LightColorPalette.secondary), shape = CircleShape)
-      )
-      Text(
-        text = pet.name,
-        color = Color.Black,
-        fontStyle = MaterialTheme.typography.caption.fontStyle,
-        modifier = Modifier
-          .padding(10.dp)
-          .fillMaxWidth()
-      )
+            .height(80.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp)
+            .clickable(onClick = onClick)
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Spacer(Modifier.size(8.dp))
+            GlideImage(
+                data = pet.imageUrl,
+                contentScale = ContentScale.Crop,
+                contentDescription = "",
+                modifier = Modifier
+                    .size(60.dp)
+                    .padding(4.dp)
+                    .clip(CircleShape)
+                    .border(BorderStroke(4.dp, LightColorPalette.secondary), shape = CircleShape)
+            )
+            Text(
+                text = pet.name,
+                color = Color.Black,
+                fontStyle = MaterialTheme.typography.caption.fontStyle,
+                modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxWidth()
+            )
+        }
     }
-  }
 }
 
 @Preview(widthDp = 200, heightDp = 200)
 @Composable
 fun PuppyItemPreview() {
-  Box(contentAlignment = Alignment.Center) {
-    PetItem(
-      Pet(id = 0, name = "name", info = "info", imageUrl = ""),
-      onClick = {}
-    )
-  }
+    Box(contentAlignment = Alignment.Center) {
+        PetItem(
+            Pet(id = 0, name = "name", info = "info", imageUrl = ""),
+            onClick = {}
+        )
+    }
 }

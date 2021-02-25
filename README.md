@@ -1,4 +1,4 @@
-No cats no life
+# No cats no life
 
 ![Workflow result](https://github.com/kissedcode/android-dev-challenge-compose-01/workflows/Check/badge.svg)
 
